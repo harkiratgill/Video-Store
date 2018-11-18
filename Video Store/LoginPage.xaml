@@ -1,0 +1,24 @@
+﻿<Window x:Class="Video_Store.LoginPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Video_Store"
+        mc:Ignorable="d"
+        Title="LoginPage" Height="504" Width="341">
+    <Grid Margin="0,0,2,-4">
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
+        <Label Content="Video Store" HorizontalAlignment="Left" Margin="54,46,0,0" VerticalAlignment="Top" Height="56" Width="224" FontSize="36" FontFamily="Century Gothic"/>
+        <Label Content="Please Enter Yore Username And Password" HorizontalAlignment="Left" Margin="36,120,0,0" VerticalAlignment="Top" FontFamily="Century Gothic" Width="264" Height="30"/>
+        <Label x:Name="Username_lbl" Content="Username" HorizontalAlignment="Left" Margin="118,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Username_txtbox" HorizontalAlignment="Left" Height="23" Margin="71,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="118,243,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Password_txtbox" HorizontalAlignment="Left" Height="23" Margin="71,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <Button x:Name="Login_button" Content="Login" HorizontalAlignment="Left" Margin="118,326,0,0" VerticalAlignment="Top" Width="63" Click="Login_click"/>
+        <Label Content="Don't Have A Account ?" HorizontalAlignment="Left" Margin="46,396,0,0" VerticalAlignment="Top"/>
+        <Button Content="Register Now" HorizontalAlignment="Left" Margin="195,399,0,0" VerticalAlignment="Top" Width="83" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>
