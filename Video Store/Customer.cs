@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -19,15 +20,17 @@ namespace Video_Store
 
         String Query_customer;
 
-        internal object UserDG()
+        public IEnumerable DefaultView { get; internal set; }
+
+        internal object CustomerDG()
         {
             throw new NotImplementedException();
         }
 
      
-        public Customer Listcustomer()
+        public DataTable Listcustomer()
         {
-            Customer  dt = new DataTable();
+            DataTable  dt = new DataTable();
             try
             {
                 cmd_customer.Connection = Conn_customer;
@@ -67,6 +70,21 @@ namespace Video_Store
                 }
             }
 
+        }
+
+        internal void UpdateCustomer(object custID, string firstName, string lastName, string address, string phone)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void AddCustomer(string text1, string text2, string text3, string text4)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Delete_Customer(object custID)
+        {
+            throw new NotImplementedException();
         }
 
         private void Load(SqlDataReader reader_customer)
@@ -185,9 +203,6 @@ namespace Video_Store
             }
         }
 
-        public static implicit operator Customer(DataTable v)
-        {
-            throw new NotImplementedException();
-        }
     }
-}
+}   
+
