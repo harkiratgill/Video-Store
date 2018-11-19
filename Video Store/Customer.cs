@@ -12,7 +12,7 @@ namespace Video_Store
 {
     class Customer
     {
-        SqlConnection Conn_customer = new SqlConnection("Data Source=GILL-PC\\SQLEXPRESS;Initial Catalog=LoginDB;Integrated Security=True");
+        SqlConnection Conn_customer = new SqlConnection("Data Source=gill-pc\\sqlexpress;Initial Catalog=RENT;Integrated Security=True");
 
         SqlCommand cmd_customer = new SqlCommand();
 
@@ -34,7 +34,7 @@ namespace Video_Store
             try
             {
                 cmd_customer.Connection = Conn_customer;
-                Query_customer = "Select CustID, FirstName, LastName, Address, Phone from Customer";
+                Query_customer = "Select CustID, FirstName, LastName, Address, Phone from Coustmer";
 
                 cmd_customer.CommandText = Query_customer;
                 //connection opened
@@ -72,25 +72,6 @@ namespace Video_Store
 
         }
 
-        internal void UpdateCustomer(object custID, string firstName, string lastName, string address, string phone)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void AddCustomer(string text1, string text2, string text3, string text4)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void Delete_Customer(object custID)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Load(SqlDataReader reader_customer)
-        {
-            throw new NotImplementedException();
-        }
 
         
         public void AddCustomer(string FirstName, string LastName, string Address, int Phone)

@@ -22,7 +22,7 @@ namespace Video_Store
     {
         Customer  Obj_Customer = new Customer() ;
 
-        public object CustID { get; private set; }
+        public int CustID;
 
         public Main()
         {
@@ -34,7 +34,7 @@ namespace Video_Store
             string FirstName = First_txt.Text;
             string LastName = Last_txt.Text;
             string Address = Address_txt.Text;
-            string Phone = Address_txt.Text;
+            int Phone = Convert.ToInt32(Phone_txt.Text);
             Obj_Customer.UpdateCustomer(CustID , FirstName, LastName, Address, Phone  );
             MessageBox.Show("Book Updated");
             Customer_data.ItemsSource = Obj_Customer.Listcustomer().DefaultView;
@@ -46,9 +46,10 @@ namespace Video_Store
 
         private void Add_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (First_txt.Text != "" && Last_txt.Text != "" && Address_txt.Text != "" && Phone_txt.Text != "")
+            int Phone_Number = Convert.ToInt32(Phone_txt.Text);
+            if (First_txt.Text != "" && Last_txt.Text != "" && Address_txt.Text != "" && Phone_Number != 0)
             {
-                Obj_Customer.AddCustomer( First_txt.Text, Last_txt.Text, Address_txt.Text, Phone_txt.Text  );
+                Obj_Customer.AddCustomer( First_txt.Text, Last_txt.Text, Address_txt.Text, Phone_Number);
                 Customer_data.ItemsSource = Obj_Customer.Listcustomer().DefaultView;
                 First_txt.Text = "";
                 Last_txt.Text = "";
@@ -64,7 +65,7 @@ namespace Video_Store
             MessageBoxResult dialogResult = MessageBox.Show("Do you wanna Delete This Customer ?", "Customer", MessageBoxButton.YesNo);
             if (dialogResult.ToString() == "Yes")
             {
-                Obj_Customer.Delete_Customer(CustID);
+                Obj_Customer.DeleteCustomer(CustID);
                 MessageBox.Show("Customer Deleted");
                 Customer_data.ItemsSource = Obj_Customer.Listcustomer().DefaultView;
                 First_txt.Text = "";

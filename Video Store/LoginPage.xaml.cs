@@ -39,9 +39,9 @@ namespace Video_Store
             if (Obj_Login.Login_method(Username_txtbox.Text, Password_txtbox.Text))
             {
                 MessageBox.Show("Login Successful");
-                Main w = new Main();
-                w.ShowDialog();
-                this.Close();
+                (new Main()).Show();
+                this.Hide();
+                
             }
             else
             {
