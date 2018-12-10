@@ -71,7 +71,7 @@ namespace Video_Store
 
 
 
-        public void AddMovies(string Rating, string Title, string Year, string Rental_Cost, string Plot, string Genre)
+        public void AddMovies(string Rating, string Title, string Year, string Rental_Cost, string Plot, string Genre, int copies)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace Video_Store
 
 
 
-                Query_Movies = "Insert into Movies(Rating, Title, Year, Rental_Cost, Plot, Genre) Values( @Rating, @Title, @Year, @Rental_Cost, @Plot, @Genre)";
+                Query_Movies = "Insert into Movies(Rating, Title, Year, Rental_Cost, Plot, Genre, copies) Values( @Rating, @Title, @Year, @Rental_Cost, @Plot, @Genre, @copies)";
 
 
                 cmd_Movies.Parameters.AddWithValue("@Rating", Rating);
@@ -89,6 +89,7 @@ namespace Video_Store
                 cmd_Movies.Parameters.AddWithValue("@Rental_Cost", Rental_Cost);
                 cmd_Movies.Parameters.AddWithValue("@Plot", Plot);
                 cmd_Movies.Parameters.AddWithValue("@Genre", Genre);
+                cmd_Movies.Parameters.AddWithValue("@copies", copies);
 
                 cmd_Movies.CommandText = Query_Movies;
 
@@ -114,16 +115,17 @@ namespace Video_Store
             }
         }
 
-        public void DeleteMovie(Int32 MoviedID)
+        public void DeleteMovie(int MoviedID)
         {
             try
             {
                 cmd_Movies.Parameters.Clear();
                 cmd_Movies.Connection = Conn_Movies;
-                Query_Movies = "Delete from Movies where Movies like @MoviesID";
-
+                
+                 
 
                 cmd_Movies.Parameters.AddWithValue("@MoviedID", MoviedID);
+                Query_Movies = "Delete from Movies where MoviedID = @MoviedID";
 
                 cmd_Movies.CommandText = Query_Movies;
 
@@ -150,22 +152,23 @@ namespace Video_Store
        
 
         /*UpdateBooks method is taking 3 inputs i.e. BookID, BookName, Author, which are used in update query to update Books data in database */
-        public void UpdateMovie(int MoviedID, string Rating, string Title, int Year, int Rental_Cost, string Plot, string Genre)
+        public void UpdateMovie(int MoviedID, string Rating, string Title, int Year, string Plot, string Genre, int copies)
         {
             try
             {
                 cmd_Movies.Parameters.Clear();
                 cmd_Movies.Connection = Conn_Movies;
-                Query_Movies = "Update Movies Set Rating = @Rating Title = @Title Year = @Year Rental_Cost = @Rental_Cost Plot = @Plot Genre = @Genre where MoviedID = @MoviedID";
+                Query_Movies = "Update Movies Set Rating = @Rating, Title = @Title, Year = @Year,  Plot = @Plot, Genre = @Genre, copies = @copies where MoviedID like @MoviedID";
 
 
                 cmd_Movies.Parameters.AddWithValue("@MoviedID", MoviedID);
                 cmd_Movies.Parameters.AddWithValue("@Rating", Rating);
                 cmd_Movies.Parameters.AddWithValue("@Title", Title);
                 cmd_Movies.Parameters.AddWithValue("@Year", Year);
-                cmd_Movies.Parameters.AddWithValue("@Rental_Cost", Rental_Cost);
                 cmd_Movies.Parameters.AddWithValue("@Plot", Plot);
                 cmd_Movies.Parameters.AddWithValue("@Genre", Genre);
+                cmd_Movies.Parameters.AddWithValue("@copies", copies);
+
 
                 cmd_Movies.CommandText = Query_Movies;
 
@@ -190,9 +193,6 @@ namespace Video_Store
             }
         }
 
-        internal void UpdateMovie(int moviedID, string rating, string title, int year, string rental_Cost, string plot, string genre)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
