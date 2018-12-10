@@ -34,10 +34,10 @@ namespace Video_Store
             try
             {
                 cmd_customer.Connection = Conn_customer;
-                Query_customer = "Select CustID, FirstName, LastName, Address, Phone from Coustmer";
+                Query_customer = "Select * from Coustmer";
 
                 cmd_customer.CommandText = Query_customer;
-                //connection opened
+                //connection   opened
                 Conn_customer.Open();
 
                 // get data stream
@@ -74,15 +74,16 @@ namespace Video_Store
 
 
         
-        public void AddCustomer(string FirstName, string LastName, string Address, int Phone)
+        public void AddCustomer(string FirstName, string LastName, string Address, string Phone)
         {
             try
             {
+                cmd_customer.Parameters.Clear();
                 cmd_customer.Connection = Conn_customer;
 
                 
 
-                Query_customer = "Insert into Customer(FirstName, LastName, Address, Phone) Values( @FirstName, @LastName, @Address, @Phone)";
+                Query_customer = "Insert into Coustmer(FirstName, LastName, Address, Phone) Values( @FirstName, @LastName, @Address, @Phone)";
 
                 
                 cmd_customer.Parameters.AddWithValue("@FirstName", FirstName );
@@ -118,8 +119,9 @@ namespace Video_Store
         {
             try
             {
+                cmd_customer.Parameters.Clear();
                 cmd_customer.Connection = Conn_customer;
-                Query_customer = "Delete from Customer where CustID like @CustID";
+                Query_customer = "Delete from Coustmer where CustID like @CustID";
 
                
                 cmd_customer.Parameters.AddWithValue("@CustID", CustID);
@@ -147,12 +149,13 @@ namespace Video_Store
         }
 
         /*UpdateBooks method is taking 3 inputs i.e. BookID, BookName, Author, which are used in update query to update Books data in database */
-        public void UpdateCustomer(int CustID, string FirstName, string LastName, string Address, int Phone)
+        public void UpdateCustomer(int CustID, string FirstName, string LastName, string Address, string Phone)
         {
             try
             {
+                cmd_customer.Parameters.Clear();
                 cmd_customer.Connection = Conn_customer;
-                Query_customer = "Update Customer Set FirstName = @FirstName LastName = @LastName Address = @Address Phone = @Phone where CustID = @Cust_ID";
+                Query_customer = "Update Coustmer Set FirstName = @FirstName, LastName = @LastName, Address = @Address, Phone = @Phone where CustID = @CustID";
 
 
                 cmd_customer.Parameters.AddWithValue("@CustID", CustID);
