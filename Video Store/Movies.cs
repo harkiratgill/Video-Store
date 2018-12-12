@@ -120,32 +120,43 @@ namespace Video_Store
             try
             {
                 cmd_Movies.Parameters.Clear();
-                cmd_Movies.Connection = Conn_Movies;
-                
-                 
-
-                cmd_Movies.Parameters.AddWithValue("@MoviedID", MoviedID);
-                Query_Movies = "Delete from Movies where MoviedID = @MoviedID";
-
-                cmd_Movies.CommandText = Query_Movies;
+                cmd_Movies.Connection = this.Conn_Movies ;
 
 
+                //first of the all select the record from the Rented Movie is he already has a movie on rent or not if he has a movie on rent then he can't be able to delete the record from the table
+                String Strr = "";
+                Strr = "select Count(*) from RentalMovies where MovieIDFK= @MovieID and DateReturned ='1900-01-01' ";
+                SqlParameter[] parameterArray = new SqlParameter[] { new SqlParameter("@MoviedID", MoviedID) };
+                cmd_Movies.Parameters.Add(parameterArray[0]);
+
+                cmd_Movies.CommandText = Strr;
                 Conn_Movies.Open();
-
-
-                cmd_Movies.ExecuteNonQuery();
+                int count = Convert.ToInt32(cmd_Movies.ExecuteScalar());
+                if (count == 0)
+                {
+                    Strr = "Delete from Movies where MoviedID like @MoviedID";
+                    cmd_Movies.CommandText = Strr;
+                    cmd_Movies.ExecuteNonQuery();
+                    MessageBox.Show("Movie Deleted");
+                }
+                else
+                {
+                    //display the message if he has a movie on rent 
+                    MessageBox.Show("Customer has rented the movie. First take the movie back than you can delete the movie");
+                }
 
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                MessageBox.Show("Database Exception" + ex.Message);
+                MessageBox.Show("Database Exception" + exception.Message);
             }
             finally
             {
-                if (Conn_Movies != null)
+                if (this.Conn_Movies != null)
                 {
-                    Conn_Movies.Close();
+                    this.Conn_Movies.Close();
                 }
+
             }
         }
 

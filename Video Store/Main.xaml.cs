@@ -31,6 +31,7 @@ namespace Video_Store
         public Main()
         {
             InitializeComponent();
+            dateissue_txt.Text = DateTime.Now.ToString("dd-MM-yyyy");
         }
 
         private void Update_btn_Click(object sender, RoutedEventArgs e)
@@ -138,7 +139,7 @@ namespace Video_Store
             string Plot = Plot_txt.Text;
             string Genre = Genre_txt.Text;
             int Year = Convert.ToInt32(Year_tx.Text);
-            Obj_Movies.UpdateMovie(MoviedID, Rating, Title, Year, Plot, Genre, copies );
+            Obj_Movies.UpdateMovie(MoviedID, Rating, Title, Year, Plot, Genre, copies);
             MessageBox.Show("Video Updated");
             Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
             Title_txt.Text = "";
@@ -151,10 +152,11 @@ namespace Video_Store
 
         private void DeleteMovie(object sender, RoutedEventArgs e)
         {
-            int movie = Convert.ToInt32(Movieid_txt.Text);
-
             
-          
+                int movie = Convert.ToInt32(Movieid_txt.Text);
+
+
+
                 Obj_Customer.DeleteCustomer(movie);
                 Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
                 Title_txt.Text = "";
@@ -162,8 +164,11 @@ namespace Video_Store
                 Plot_txt.Text = "";
                 Year_tx.Text = "";
                 Genre_txt.Text = "";
-            Movieid_txt.Text = "";
+                Movieid_txt.Text = "";
 
+
+            
+            
 
 
         }
@@ -182,6 +187,7 @@ namespace Video_Store
             Year_tx.Text = Convert.ToString(row["Year"]);
             Rating_txt.Text = Convert.ToString(row["Rating"]);
             Movieid_txt.Text = Convert.ToString(row["MoviedID"]);
+            copies_txt.Text = Convert.ToString(row["copies"]);
 
             Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
         }
@@ -201,8 +207,34 @@ namespace Video_Store
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Returned_Click(object sender, RoutedEventArgs e)
         {
+            int RMID = Convert.ToInt32(Rmid_txt.Text);
+            dateretuned_txt.Text = DateTime.Now.ToString("dd-MM-yyyy");
+            int MoviedID = Convert.ToInt32(Movieid_txt.Text);
+            
+
+
+            Obj_Rented.UpdateRented(RMID, MoviedID, Convert.ToDateTime(dateissue_txt.Text), Convert.ToDateTime(dateretuned_txt.Text));
+
+            Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
+            Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
+            Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
+            Customer_data.ItemsSource = Obj_Customer.Listcustomer().DefaultView;
+            Movieid_txt.Text = "";
+            Customerid_txt.Text = "";
+            Title_txt.Text = "";
+            Plot_txt.Text = "";
+            Genre_txt.Text = "";
+            Year_tx.Text = "";
+            Rating_txt.Text = "";
+            Movieid_txt.Text = "";
+            copies_txt.Text = "";
+            First_txt.Text = "";
+            Last_txt.Text = "";
+            Address_txt.Text = "";
+            Phone_txt.Text = "";
+
 
         }
 
@@ -223,23 +255,112 @@ namespace Video_Store
 
         private void Issue_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (Movieid_txt.Text != "" && Customerid_txt.Text != "" && dateissue_txt.Text != "" )
-            {
-                int MovieID = Convert.ToInt32(Movieid_txt.Text);
-                int Customerid = Convert.ToInt32(Customerid_txt.Text);
-               
+            if (copies_txt.Text != "0")
 
-                Obj_Rented.AddRented(Movieid_txt.Text, Title_txt.Text, Year_tx.Text, rent, Plot_txt.Text, Genre_txt.Text, copies);
-                Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
-                Title_txt.Text = "";
-                Rating_txt.Text = "";
-                Plot_txt.Text = "";
-                Year_tx.Text = "";
-                Genre_txt.Text = "";
-                copies_txt.Text = "";
+            {
+                if (Movieid_txt.Text != "" && Customerid_txt.Text != "" && dateissue_txt.Text != "")
+                {
+                    int MovieID = Convert.ToInt32(Movieid_txt.Text);
+                    int Customerid = Convert.ToInt32(Customerid_txt.Text);
+                    dateissue_txt.Text = DateTime.Now.ToString("dd-MM-yyyy");
+                    int copies = Convert.ToInt32(copies_txt.Text);
+                    int isout = 1;
+                    
+
+
+                    Obj_Rented.AddRented(MovieID, Customerid, Convert.ToDateTime(dateissue_txt.Text), copies, isout);
+                    Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
+                    Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
+                    Customer_data.ItemsSource = Obj_Customer.Listcustomer().DefaultView;
+                    Movieid_txt.Text = "";
+                    Customerid_txt.Text = "";
+                    Title_txt.Text = "";
+                    Plot_txt.Text = "";
+                    Genre_txt.Text = "";
+                    Year_tx.Text = "";
+                    Rating_txt.Text = "";
+                    Movieid_txt.Text = "";
+                    copies_txt.Text = "";
+                    First_txt.Text = "";
+                    Last_txt.Text = "";
+                    Address_txt.Text = "";
+                    Phone_txt.Text = "";
+
+                }
 
             }
+                else
+                {
+                    MessageBox.Show("No more copies Left Of This Movies Please Select A Diffrent One");
+                }
 
+        }
+
+        private void Rental_data_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SlectRented(object sender, MouseButtonEventArgs e)
+        {
+            DataRowView row = (DataRowView)Rental_data.SelectedItems[0];
+            Movieid_txt.Text = Convert.ToString(row["MovieIDFK"]);
+            Customerid_txt.Text = Convert.ToString(row["CustIDFK"]);
+            Rmid_txt.Text = Convert.ToString(row["RMID"]);
+            dateissue_txt.Text = Convert.ToString(row["DateRented"]);
+            dateretuned_txt.Text = DateTime.Now.ToString("dd-MM-yyyy");
+
+
+
+            Rental_data.ItemsSource = Obj_Rented .ListRented().DefaultView;
+        }
+
+        private void video_load(object sender, RoutedEventArgs e)
+        {
+            Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
+
+        }
+
+        private void rented(object sender, RoutedEventArgs e)
+        {
+            Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
+        }
+
+        private void Return_Click(object sender, RoutedEventArgs e)
+        {
+
+            int RMID = Convert.ToInt32(Rmid_txt.Text);
+            dateretuned_txt.Text = DateTime.Now.ToString("dd-MM-yyyy");
+            int MoviedID = Convert.ToInt32(Movieid_txt.Text);
+
+
+
+            Obj_Rented.UpdateRented(RMID, MoviedID, Convert.ToDateTime(dateissue_txt.Text), Convert.ToDateTime(dateretuned_txt.Text));
+
+            Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
+            Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
+            Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
+            Customer_data.ItemsSource = Obj_Customer.Listcustomer().DefaultView;
+            Movieid_txt.Text = "";
+            Customerid_txt.Text = "";
+            Title_txt.Text = "";
+            Plot_txt.Text = "";
+            Genre_txt.Text = "";
+            Year_tx.Text = "";
+            Rating_txt.Text = "";
+            Movieid_txt.Text = "";
+            copies_txt.Text = "";
+            First_txt.Text = "";
+            Last_txt.Text = "";
+            Address_txt.Text = "";
+            Phone_txt.Text = "";
+
+
+        }
+
+        private void Topcust_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Obj_Rented.Best_Buyer();
         }
     }
 }
