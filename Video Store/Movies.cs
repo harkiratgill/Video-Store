@@ -127,7 +127,7 @@ namespace Video_Store
 
                 //blow code is to check if the Movie is rented
                 String check = "";
-                check = "select Count(*) from RentedMovies where MovieIDFK = @MovieID and isout ='1' ";
+                check = "select Count(*) from RentedMovies where MovieIDFK = @MovieID and Rented ='1' ";
                 SqlParameter[] parameterArray = new SqlParameter[] { new SqlParameter("@MovieID", MovieID) };
                 cmd_Movies.Parameters.Add(parameterArray[0]);
 

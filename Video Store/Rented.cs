@@ -39,7 +39,7 @@ namespace Video_Store6
             try
             {
                 cmd_Rented.Connection = Conn_Rented;
-                Query_Rented = "Select * from RentedMovies Order by RMID descending";
+                Query_Rented = "Select * from RentedMovies Order by RMID DESC";
 
                 cmd_Rented.CommandText = Query_Rented;
                 //connection   opened
@@ -79,7 +79,7 @@ namespace Video_Store6
 
 
 
-        public void AddRented(int MovieIDFK, int CustIDFK, DateTime  DateRented, int copies, int isout)
+        public void AddRented(int MovieIDFK, int CustIDFK, DateTime  DateRented, int copies, int Rented)
         {// thsi code is used to issue movie 
             try
             {
@@ -88,12 +88,12 @@ namespace Video_Store6
 
 
 
-                Query_Rented = "Insert into RentedMovies(MovieIDFK, CustIDFK, DateRented ,isout) Values( @MovieIDFk, @CustIDFK, @DateRented, @isout)";
+                Query_Rented = "Insert into RentedMovies(MovieIDFK, CustIDFK, DateRented ,Rented) Values( @MovieIDFk, @CustIDFK, @DateRented, @Rented)";
                 
                 cmd_Rented.Parameters.AddWithValue("@MovieIDFK", MovieIDFK );
                 cmd_Rented.Parameters.AddWithValue("@CustIDFK", CustIDFK );
                 cmd_Rented.Parameters.AddWithValue("@DateRented", DateRented );
-                cmd_Rented.Parameters.AddWithValue("@isout", isout);
+                cmd_Rented.Parameters.AddWithValue("@Rented", Rented);
                 cmd_Rented.Parameters.AddWithValue("@copies", copies);
 
 
@@ -163,12 +163,12 @@ namespace Video_Store6
                 cmd_Rented.ExecuteNonQuery();
 
 
-                S2 = "Update Movies set Copies = Copies+1 where MovieID = @MovieIDFK";
+                S2 = "Update Movies set copies = copies+1 where MovieID = @MovieIDFK";
                 this.cmd_Rented.CommandText = this.S2;
 
                 this.cmd_Rented.ExecuteNonQuery();
 
-                S2 = "Update RentedMovies set isout = 0 where RMID = @RMID";
+                S2 = "Update RentedMovies set Rented = 0 where RMID = @RMID";
                 this.cmd_Rented.CommandText = this.S2;
 
                 this.cmd_Rented.ExecuteNonQuery();
