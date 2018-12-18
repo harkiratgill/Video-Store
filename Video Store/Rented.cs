@@ -8,12 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Video_Store
+namespace Video_Store6
 {
     class Rented
     {
-        
+        //this code will be used in all methods to access the sql connection
+
         SqlConnection Conn_Rented = new SqlConnection("Data Source=gill-pc\\sqlexpress;Initial Catalog=RENT;Integrated Security=True");
+        //will be used in all methods to run sql command
 
         SqlCommand cmd_Rented = new SqlCommand();
 
@@ -37,7 +39,7 @@ namespace Video_Store
             try
             {
                 cmd_Rented.Connection = Conn_Rented;
-                Query_Rented = "Select * from RentedMovies";
+                Query_Rented = "Select * from RentedMovies Order by RMID descending";
 
                 cmd_Rented.CommandText = Query_Rented;
                 //connection   opened
@@ -78,7 +80,7 @@ namespace Video_Store
 
 
         public void AddRented(int MovieIDFK, int CustIDFK, DateTime  DateRented, int copies, int isout)
-        {
+        {// thsi code is used to issue movie 
             try
             {
                 cmd_Rented.Parameters.Clear();
@@ -103,7 +105,7 @@ namespace Video_Store
                 // Executed query
                 cmd_Rented.ExecuteNonQuery();
 
-                Query_Rented = "Update Movies set copies = copies-1 where MoviedID = @MovieIDFK";
+                Query_Rented = "Update Movies set copies = copies-1 where MovieID = @MovieIDFK";
                 cmd_Rented.CommandText = Query_Rented;
                 cmd_Rented.ExecuteNonQuery();
                 
@@ -126,8 +128,8 @@ namespace Video_Store
         }
 
 
-        public void UpdateRented(int RMID, int MoviedID, DateTime  DateRent, DateTime  DateReturned)
-        {
+        public void UpdateRented(int RMID, int MovieID, DateTime  DateRent, DateTime  DateReturned)
+        {// this method is used to return the movie 
             try
             {
                 cmd_Rented.Parameters.Clear();
@@ -135,8 +137,8 @@ namespace Video_Store
                 int RentTotal = 0, Cost = 0;
                 double days = (DateReturned - DateRent).TotalDays;
 
-                string S1 = "Select Rental_Cost from Movies where MoviedID = @MovieIDFK";
-                cmd_Rented.Parameters.AddWithValue("@MovieIDFK", MoviedID);
+                string S1 = "Select Rental_Cost from Movies where MovieID = @MovieIDFK";
+                cmd_Rented.Parameters.AddWithValue("@MovieIDFK", MovieID);
 
                 cmd_Rented.CommandText = S1;
                 Conn_Rented.Open();
@@ -161,7 +163,7 @@ namespace Video_Store
                 cmd_Rented.ExecuteNonQuery();
 
 
-                S2 = "Update Movies set Copies = Copies+1 where MoviedID = @MovieIDFK";
+                S2 = "Update Movies set Copies = Copies+1 where MovieID = @MovieIDFK";
                 this.cmd_Rented.CommandText = this.S2;
 
                 this.cmd_Rented.ExecuteNonQuery();
@@ -188,38 +190,38 @@ namespace Video_Store
 
         }
 
-        public void Best_Buyer()
-        {
-            int Best_BuyerID = 0, Max_number = 0, Total_Customer = 0;
-            string Strr = "";
+        public void TopCustomer()
+        {// this mehod is used to find the top Custometr
+            int Top = 0, Max = 0, Total = 0;
+            string Value = "";
             try
             {
                 cmd_Rented.Parameters.Clear();
                 cmd_Rented.Connection = Conn_Rented;
-                string Strr1 = "Select IDENT_CURRENT('Coustmer')";
+                string Val = "Select IDENT_CURRENT('Coustmer')";
 
-                cmd_Rented.CommandText = Strr1;
+                cmd_Rented.CommandText = Val;
                 Conn_Rented.Open();
-                Total_Customer = Convert.ToInt32(cmd_Rented.ExecuteScalar());
+                Total = Convert.ToInt32(cmd_Rented.ExecuteScalar());
 
-                for (int i = 1; i <= Total_Customer; i++)
+                for (int i = 1; i <= Total; i++)
                 {
 
-                    Strr = "select Count(*) from RentedMovies where CustIDFK= '" + i + "'";
+                    Value = "select Count(*) from RentedMovies where CustIDFK= '" + i + "'";
 
 
-                    cmd_Rented .CommandText = Strr;
+                    cmd_Rented .CommandText = Value;
                     int count = Convert.ToInt32(cmd_Rented.ExecuteScalar());
-                    if (count > Max_number)
+                    if (count > Max)
                     {
-                        Max_number = count;
-                        Best_BuyerID = i;
+                        Max = count;
+                        Top = i;
                     }
                 }
-                this.S2 = "Select FirstName from Coustmer where CustID ='" + Best_BuyerID + "'";
+                this.S2 = "Select FirstName from Coustmer where CustID ='" + Top + "'";
                 this.cmd_Rented.CommandText = this.S2;
                 String FirstName = Convert.ToString(cmd_Rented.ExecuteScalar());
-                MessageBox.Show(FirstName + " (CustID " + Best_BuyerID + " ) is maximum movie buyer with " + Max_number + " times");
+                MessageBox.Show(FirstName + " (CustID " + Top + " ) is The Coustomer Rented Most Movies With " + Max + " times");
             }
             catch (Exception exception)
             {
@@ -236,40 +238,40 @@ namespace Video_Store
         }
 
 
-        public void Top_Movie()
-        {
-            int Top_MovieID = 0, Max_number = 0, Total_Movies = 0;
-            string Strr = "";
+        public void TopMovie()
+        {// this method is used to display the top movie 
+            int Top = 0, Max = 0, Total = 0;
+            string Value = "";
             try
             {
                 cmd_Rented .Parameters.Clear();
                 cmd_Rented.Connection = Conn_Rented; 
-                string Strr1 = "Select IDENT_CURRENT('Movies')";
+                string Val = "Select IDENT_CURRENT('Movies')";
 
-                cmd_Rented.CommandText = Strr1;
+                cmd_Rented.CommandText = Val;
                 Conn_Rented.Open();
-                Total_Movies = Convert.ToInt32(cmd_Rented.ExecuteScalar());
+                Total = Convert.ToInt32(cmd_Rented.ExecuteScalar());
 
-                for (int i = 1; i <= Total_Movies; i++)
+                for (int i = 1; i <= Total; i++)
                 {
 
-                    Strr = "select Count(*) from RentedMovies where MovieIDFK= '" + i + "'";
+                    Value = "select Count(*) from RentedMovies where MovieIDFK= '" + i + "'";
 
 
-                    cmd_Rented.CommandText = Strr;
+                    cmd_Rented.CommandText = Value;
                     int count = Convert.ToInt32(cmd_Rented.ExecuteScalar());
-                    if (count > Max_number)
+                    if (count > Max)
                     {
-                        Max_number = count;
-                        Top_MovieID = i;
+                        Max = count;
+                        Top = i;
                     }
                 }
 
                 
-                this.Strr= "Select Title from Movies where MovieID ='" + Top_MovieID + "'";
+                this.Strr= "Select Title from Movies where MovieID ='" + Top + "'";
                 this.cmd_Rented.CommandText = this.Strr;
                 String Title = Convert.ToString(cmd_Rented.ExecuteScalar());
-                MessageBox.Show(Title + " (Movie ID " + Top_MovieID + " ) is maximum rented movie with " + Max_number + " times");
+                MessageBox.Show(Title + " (MovieID " + Top + " ) Is The Movie Rented Most Time With " + Max + " times");
             }
             catch (Exception exception)
             {

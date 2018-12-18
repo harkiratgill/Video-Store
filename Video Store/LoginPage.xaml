@@ -6,10 +6,7 @@
         xmlns:local="clr-namespace:Video_Store"
         mc:Ignorable="d"
         Title="LoginPage" Height="504" Width="341">
-    <Grid Margin="0,0,2,-4">
-        <Grid.Background>
-            <ImageBrush/>
-        </Grid.Background>
+    <Grid Margin="0,0,2,-4" Background="#FFFFDBDB">
         <Label Content="Video Store" HorizontalAlignment="Left" Margin="54,46,0,0" VerticalAlignment="Top" Height="56" Width="224" FontSize="36" FontFamily="Century Gothic"/>
         <Label Content="Please Enter Yore Username And Password" HorizontalAlignment="Left" Margin="36,120,0,0" VerticalAlignment="Top" FontFamily="Century Gothic" Width="264" Height="30"/>
         <Label x:Name="Username_lbl" Content="Username" HorizontalAlignment="Left" Margin="118,170,0,0" VerticalAlignment="Top"/>

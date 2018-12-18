@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Video_Store"
         mc:Ignorable="d"
-        Title="Main" Height="687" Width="1085">
+        Title="Main" Height="655" Width="1100">
     <Grid Margin="0,0,-17,0" Background="#FF45BAE6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="91*"/>
@@ -29,7 +29,7 @@
                         <ColumnDefinition Width="110*"/>
                         <ColumnDefinition Width="171*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="Customer_data"   CanUserAddRows="False" CanUserSortColumns="True" Background="Beige" AlternatingRowBackground="Azure" RowBackground="Beige"  HeadersVisibility="Column"   CanUserResizeColumns="True" AutoGenerateColumns="True" HorizontalAlignment="Left" Height="285" VerticalAlignment="Top" Width="551" Margin="5,5,0,0" Grid.ColumnSpan="5" MouseDoubleClick="SelectBookRow_Edit" SelectionChanged="Customer_data_SelectionChanged"/>
+                    <DataGrid x:Name="Customer_data"   CanUserAddRows="False" CanUserSortColumns="True" Background="Beige" AlternatingRowBackground="Azure" RowBackground="Beige"  HeadersVisibility="Column"   CanUserResizeColumns="True" AutoGenerateColumns="True" HorizontalAlignment="Left" Height="299" VerticalAlignment="Top" Width="556" Grid.ColumnSpan="5" MouseDoubleClick="SelectBookRow_Edit" SelectionChanged="Customer_data_SelectionChanged" Margin="0,0,0,-9"/>
 
                 </Grid>
             </TabItem>
@@ -115,17 +115,18 @@
         <Label Content="Date Issued" Grid.Column="1" HorizontalAlignment="Left" Margin="207,455,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.053,0.346"/>
         <Label Content="Coustomer" Grid.Column="1" HorizontalAlignment="Left" Margin="436,407,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1,-0.231"/>
         <Label Content="Date Returned" Grid.Column="1" HorizontalAlignment="Left" Margin="428,459,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Movieid_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="287,411,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" TextChanged="Movieid_txt_TextChanged"/>
+        <TextBox x:Name="Movieid_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="287,411,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" />
         <TextBox x:Name="dateissue_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="287,462,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"/>
         <TextBox x:Name="dateretuned_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="537,458,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"/>
-        <TextBox x:Name="Customerid_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="537,410,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" RenderTransformOrigin="0.705,0.435" TextChanged="Movieid_txt_Copy2_TextChanged"/>
+        <TextBox x:Name="Customerid_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="537,410,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" RenderTransformOrigin="0.705,0.435" />
         <Button x:Name="Issue_btn" Content="Issue Movie" Grid.Column="1" HorizontalAlignment="Left" Margin="255,548,0,0" VerticalAlignment="Top" Width="120" Height="53" Click="Issue_btn_Click"/>
         <Label Content="Copies" Grid.Column="1" HorizontalAlignment="Left" Margin="220,198,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="copies_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="298,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="RMID" Grid.Column="1" HorizontalAlignment="Left" Margin="323,508,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="Rmid_txt" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="392,511,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="Return" Content="Return" Grid.Column="1" HorizontalAlignment="Left" Margin="412,559,0,0" VerticalAlignment="Top" Width="75" Click="Return_Click"/>
-        <Button x:Name="topcust_btn" Content="top customer" Grid.Column="1" HorizontalAlignment="Left" Margin="596,579,0,0" VerticalAlignment="Top" Width="75" Click="Topcust_btn_Click"/>
+        <Button x:Name="Return" Content="Return" Grid.Column="1" HorizontalAlignment="Left" Margin="412,548,0,0" VerticalAlignment="Top" Width="100" Click="Return_Click" Height="53"/>
+        <Button x:Name="topcust_btn" Content="Top Customer" Grid.Column="1" HorizontalAlignment="Left" Margin="599,526,0,0" VerticalAlignment="Top" Width="95" Click="Topcust_btn_Click" Height="33"/>
+        <Button x:Name="Topmovie" Content="Top Movie" Grid.Column="1" HorizontalAlignment="Left" Margin="599,564,0,0" VerticalAlignment="Top" Width="95" Click="Topmovie_Click" Height="37"/>
 
     </Grid>
 </Window>

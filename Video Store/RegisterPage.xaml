@@ -6,12 +6,9 @@
         xmlns:local="clr-namespace:Video_Store"
         mc:Ignorable="d"
         Title="Window1" Height="496.511" Width="322.234">
-    <Grid Margin="0,0,2,20">
-        <Grid.Background>
-            <ImageBrush/>
-        </Grid.Background>
+    <Grid Margin="0,0,2,-1" Background="#FFFFC0C0">
         <Label Content="Video Store" HorizontalAlignment="Left" Margin="54,46,0,0" VerticalAlignment="Top" Height="56" Width="224" FontSize="36" FontFamily="Century Gothic"/>
-        <Label Content="Please ChooseYore Username And Password" HorizontalAlignment="Left" Margin="26,120,0,0" VerticalAlignment="Top" FontFamily="Century Gothic" Width="276" Height="30"/>
+        <Label Content="Please Choose Your Username And Password" HorizontalAlignment="Left" Margin="26,120,0,0" VerticalAlignment="Top" FontFamily="Century Gothic" Width="276" Height="30"/>
         <Label Content="Username" HorizontalAlignment="Left" Margin="118,170,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="username_txt" HorizontalAlignment="Left" Height="23" Margin="71,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
         <Label Content="Password" HorizontalAlignment="Left" Margin="118,243,0,0" VerticalAlignment="Top"/>

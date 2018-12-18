@@ -27,16 +27,24 @@ namespace Video_Store
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
-        {
-            string username = Convert.ToString(username_txt.Text);
-            string password = Convert.ToString(password_txt.Text);
-            Obj_register.Regis_method(username,password);
-          
-                MessageBox.Show("Registered Successful");
+        {   //below code is used to Check if the user has fill both the column
+            if (username_txt.Text != "" && password_txt.Text != "")
+            {
+                string username = Convert.ToString(username_txt.Text);//this code takes the value from the text box and put it in the variable 
+                string password = Convert.ToString(password_txt.Text);
+                Obj_register.Regis_method(username, password);//this code passes the variable to Regis_method in Register Class
+
+                MessageBox.Show("Registered Successful");//this code display to the user by a pop up that they have been register successfully
                 LoginPage w = new LoginPage();
-                w.ShowDialog();
-                this.Close();
-            
+                w.ShowDialog();//this code display the login window
+                Hide();
+            }
+
+            else
+            {
+                MessageBox.Show("Please Fill The Username And Password");// this code display to the user by a pop up that they Does not filled the both column
+
+            }
 
         }
     }

@@ -7,15 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace Video_Store
 {
     class Movies
     {
-        SqlConnection Conn_Movies = new SqlConnection("Data Source=gill-pc\\sqlexpress;Initial Catalog=RENT;Integrated Security=True");
-
+        //this code will be used in all methods to access the sql connection
+       SqlConnection Conn_Movies = new SqlConnection("Data Source=gill-pc\\sqlexpress;Initial Catalog=RENT;Integrated Security=True");
+        //this code will be used in all methods to run sql command
         SqlCommand cmd_Movies = new SqlCommand();
-
+        //Reader is the object of reader class and will be user in some methods
         SqlDataReader Reader_Movies;
 
         String Query_Movies;
@@ -26,7 +28,7 @@ namespace Video_Store
 
 
         public DataTable ListMovies()
-        {
+        { //this method is used to display all the movies in datagrid
             DataTable dt = new DataTable();
             try
             {
@@ -72,7 +74,7 @@ namespace Video_Store
 
 
         public void AddMovies(string Rating, string Title, string Year, string Rental_Cost, string Plot, string Genre, int copies)
-        {
+        {//This method is used to insert data into movie table
             try
             {
                 cmd_Movies.Parameters.Clear();
@@ -115,34 +117,35 @@ namespace Video_Store
             }
         }
 
-        public void DeleteMovie(int MoviedID)
-        {
+        public void DeleteMovie(int MovieID)
+        {// this method is used to remove data from movie table
             try
             {
                 cmd_Movies.Parameters.Clear();
                 cmd_Movies.Connection = this.Conn_Movies ;
 
 
-                //first of the all select the record from the Rented Movie is he already has a movie on rent or not if he has a movie on rent then he can't be able to delete the record from the table
-                String Strr = "";
-                Strr = "select Count(*) from RentalMovies where MovieIDFK= @MovieID and DateReturned ='1900-01-01' ";
-                SqlParameter[] parameterArray = new SqlParameter[] { new SqlParameter("@MoviedID", MoviedID) };
+                //blow code is to check if the Movie is rented
+                String check = "";
+                check = "select Count(*) from RentedMovies where MovieIDFK = @MovieID and isout ='1' ";
+                SqlParameter[] parameterArray = new SqlParameter[] { new SqlParameter("@MovieID", MovieID) };
                 cmd_Movies.Parameters.Add(parameterArray[0]);
 
-                cmd_Movies.CommandText = Strr;
+                cmd_Movies.CommandText = check;
                 Conn_Movies.Open();
+                //this code will delete the movie if its not rented otherwise the else statement would work
                 int count = Convert.ToInt32(cmd_Movies.ExecuteScalar());
                 if (count == 0)
                 {
-                    Strr = "Delete from Movies where MoviedID like @MoviedID";
-                    cmd_Movies.CommandText = Strr;
+                    String k = "Delete from Movies where MovieID like @MovieID";
+                    cmd_Movies.CommandText = k;
                     cmd_Movies.ExecuteNonQuery();
                     MessageBox.Show("Movie Deleted");
                 }
                 else
                 {
                     //display the message if he has a movie on rent 
-                    MessageBox.Show("Customer has rented the movie. First take the movie back than you can delete the movie");
+                    MessageBox.Show("Customer has Rented a Movie He needs to return it before u can delete the Customer ");
                 }
 
             }
@@ -162,17 +165,16 @@ namespace Video_Store
 
        
 
-        /*UpdateBooks method is taking 3 inputs i.e. BookID, BookName, Author, which are used in update query to update Books data in database */
-        public void UpdateMovie(int MoviedID, string Rating, string Title, int Year, string Plot, string Genre, int copies)
-        {
+        public void UpdateMovie(int MovieID, string Rating, string Title, int Year, string Plot, string Genre, int copies)
+        {//this method is used to update the movie 
             try
             {
                 cmd_Movies.Parameters.Clear();
                 cmd_Movies.Connection = Conn_Movies;
-                Query_Movies = "Update Movies Set Rating = @Rating, Title = @Title, Year = @Year,  Plot = @Plot, Genre = @Genre, copies = @copies where MoviedID like @MoviedID";
+                Query_Movies = "Update Movies Set Rating = @Rating, Title = @Title, Year = @Year,  Plot = @Plot, Genre = @Genre, copies = @copies where MovieID like @MovieID";
 
 
-                cmd_Movies.Parameters.AddWithValue("@MoviedID", MoviedID);
+                cmd_Movies.Parameters.AddWithValue("@MovieID", MovieID);
                 cmd_Movies.Parameters.AddWithValue("@Rating", Rating);
                 cmd_Movies.Parameters.AddWithValue("@Title", Title);
                 cmd_Movies.Parameters.AddWithValue("@Year", Year);

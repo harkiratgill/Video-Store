@@ -11,10 +11,13 @@ using System.Windows;
 namespace Video_Store
 {
     class Customer
-    {
+    {         //this code will be used in all methods to access the sql connection
+
         SqlConnection Conn_customer = new SqlConnection("Data Source=gill-pc\\sqlexpress;Initial Catalog=RENT;Integrated Security=True");
+        //this code will be used in all methods to run sql command
 
         SqlCommand cmd_customer = new SqlCommand();
+        //Reader is the object of reader class and will be user in some methods
 
         SqlDataReader Reader_customer;
 
@@ -32,15 +35,13 @@ namespace Video_Store
         {
             DataTable  dt = new DataTable();
             try
-            {
+            {// this method is used to display customers on data grid
                 cmd_customer.Connection = Conn_customer;
                 Query_customer = "Select * from Coustmer";
 
                 cmd_customer.CommandText = Query_customer;
-                //connection   opened
                 Conn_customer.Open();
 
-                // get data stream
                 Reader_customer = cmd_customer.ExecuteReader();
 
                 if (Reader_customer.HasRows)
@@ -51,19 +52,16 @@ namespace Video_Store
             }
             catch (Exception ex)
             {
-                // show error Message
                 MessageBox.Show("Database Exception" + ex.Message);
                 return null;
             }
             finally
             {
-                // close reader
                 if (Reader_customer != null)
                 {
                     Reader_customer.Close();
                 }
 
-                // close connection
                 if (Conn_customer != null)
                 {
                     Conn_customer.Close();
@@ -75,7 +73,7 @@ namespace Video_Store
 
         
         public void AddCustomer(string FirstName, string LastName, string Address, string Phone)
-        {
+        {// this method is used to add customer
             try
             {
                 cmd_customer.Parameters.Clear();
@@ -116,41 +114,50 @@ namespace Video_Store
         }
 
         public void DeleteCustomer(Int32 CustID)
-        {
+        {//this method is used to delete customer
             try
             {
-                cmd_customer.Parameters.Clear();
-                cmd_customer.Connection = Conn_customer;
-                Query_customer = "Delete from Coustmer where CustID like @CustID";
+                cmd_customer .Parameters.Clear();
+                cmd_customer.Connection = this.Conn_customer;
 
-               
-                cmd_customer.Parameters.AddWithValue("@CustID", CustID);
+                //below code is to find if the customer has rented a movie 
+                String Strr = "";
+                Strr = "select Count(*) from RentedMovies where CustIDFK= @CustID and isout ='1' ";
+                SqlParameter[] parameterArray = new SqlParameter[] { new SqlParameter("@CustID", CustID) };
+                cmd_customer.Parameters.Add(parameterArray[0]);
 
-                cmd_customer.CommandText = Query_customer;
-               
-
-                Conn_customer.Open();
-
-                
-                cmd_customer.ExecuteNonQuery();
-
+                cmd_customer.CommandText = Strr;
+                Conn_customer .Open();
+                int count = Convert.ToInt32(cmd_customer.ExecuteScalar());
+                if (count == 0)//if customer has not rented the movie it will be deleted if not then the customer first have to return the movie 
+                {
+                    Strr = "Delete from Coustmer where CustID like @CustID";
+                    cmd_customer.CommandText = Strr;
+                    cmd_customer.ExecuteNonQuery();
+                    MessageBox.Show("User Deleted");
+                }
+                else
+                {
+                    MessageBox.Show("Customer has rented the movie. First take the movie back than you can delete the customer");
+                }
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                MessageBox.Show("Database Exception" + ex.Message);
+                MessageBox.Show("Database Exception" + exception.Message);
             }
             finally
             {
-                if (Conn_customer != null)
+                if (this.Conn_customer != null)
                 {
-                    Conn_customer.Close();
+                    this.Conn_customer.Close();
                 }
             }
         }
 
-        /*UpdateBooks method is taking 3 inputs i.e. BookID, BookName, Author, which are used in update query to update Books data in database */
-        public void UpdateCustomer(int CustID, string FirstName, string LastName, string Address, string Phone)
-        {
+    
+
+    public void UpdateCustomer(int CustID, string FirstName, string LastName, string Address, string Phone)
+        {//This method is Used to update customer table
             try
             {
                 cmd_customer.Parameters.Clear();

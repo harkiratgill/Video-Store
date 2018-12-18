@@ -36,7 +36,8 @@ namespace Video_Store
 
         private void Login_click(object sender, RoutedEventArgs e)
         {
-            if (Obj_Login.Login_method(Username_txtbox.Text, Password_txtbox.Text))
+            if (Obj_Login.Login_method(Username_txtbox.Text, Password_txtbox.Text))//this code passes the variable to Login_method in Login Class 
+
             {
                 MessageBox.Show("Login Successful");
                 (new Main()).Show();

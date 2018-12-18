@@ -17,7 +17,7 @@ namespace Video_Store
         String quy;
 
         public void Regis_method(string username, string password)
-        {
+        { // this method is used to insert user details in the user table
             try
             {
                 cmd.Parameters.Clear();
