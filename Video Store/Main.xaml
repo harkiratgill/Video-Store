@@ -59,7 +59,7 @@
                         <ColumnDefinition Width="117*"/>
                         <ColumnDefinition Width="208*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="Rental_data"   CanUserAddRows="False" CanUserSortColumns="True" Background="Beige" AlternatingRowBackground="Azure" RowBackground="Beige"  HeadersVisibility="Column"   CanUserResizeColumns="True" AutoGenerateColumns="True" HorizontalAlignment="Left" Height="296" VerticalAlignment="Top" Width="556" Grid.ColumnSpan="6" MouseDoubleClick="SlectRented" SelectionChanged="Rental_data_SelectionChanged" Loaded="rented"/>
+                    <DataGrid x:Name="Rental_data"   CanUserAddRows="False" CanUserSortColumns="True" Background="Beige" AlternatingRowBackground="Azure" RowBackground="Beige"  HeadersVisibility="Column"   CanUserResizeColumns="True" AutoGenerateColumns="True" HorizontalAlignment="Left" Height="296" VerticalAlignment="Top" Width="556" Grid.ColumnSpan="6" MouseDoubleClick="SlectRented"  Loaded="rented"/>
                 </Grid>
             </TabItem>
         </TabControl>

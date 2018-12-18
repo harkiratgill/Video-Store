@@ -37,7 +37,7 @@ namespace Video_Store
                 MessageBox.Show("Registered Successful");//this code display to the user by a pop up that they have been register successfully
                 LoginPage w = new LoginPage();
                 w.ShowDialog();//this code display the login window
-                Hide();
+                this.Close();
             }
 
             else

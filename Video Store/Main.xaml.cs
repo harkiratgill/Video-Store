@@ -39,14 +39,12 @@ namespace Video_Store
         {
             if (First_txt.Text != "" && Last_txt.Text != "" && Address_txt.Text != "" && Phone_txt.Text != "")
             {
-            string FirstName = First_txt.Text;
-            string LastName = Last_txt.Text;
-            string Address = Address_txt.Text;
-            string Phone = Phone_txt.Text;
-            int CustID = Convert.ToInt32(Customerid_txt.Text);
-            Obj_Customer.UpdateCustomer(CustID , FirstName, LastName, Address, Phone);//this code passes the variable to UpdateCustomer Method in Register Class
-
-
+               string FirstName = First_txt.Text;
+               string LastName = Last_txt.Text;
+               string Address = Address_txt.Text;
+               string Phone = Phone_txt.Text;
+               int CustID = Convert.ToInt32(Customerid_txt.Text);
+               Obj_Customer.UpdateCustomer(CustID , FirstName, LastName, Address, Phone);//this code passes the variable to UpdateCustomer Method in Register Class
                 Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
                 Rental_data.ItemsSource = Obj_Rented.ListRented().DefaultView;
                 Customer_data.ItemsSource = Obj_Customer.Listcustomer().DefaultView;
@@ -311,10 +309,7 @@ namespace Video_Store
             Video_data.ItemsSource = Obj_Movies.ListMovies().DefaultView;
         }
 
-        private void TabControl_SelectionChanged()
-        {
-
-        }
+       
 
         
 
@@ -418,10 +413,7 @@ namespace Video_Store
             }
         }
 
-        private void Rental_data_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        
 
         private void SlectRented(object sender, MouseButtonEventArgs e)
         { //below code is used to put data from DataGrid in Textbox
@@ -452,9 +444,9 @@ namespace Video_Store
         {
             if(Rmid_txt.Text != "")
             { 
-            int RMID = Convert.ToInt32(Rmid_txt.Text);
-            dateretuned_txt.Text = DateTime.Today.ToString("dd-MM-yyyy");
-            int MovieID = Convert.ToInt32(Movieid_txt.Text);
+                int RMID = Convert.ToInt32(Rmid_txt.Text);
+                dateretuned_txt.Text = DateTime.Today.ToString("dd-MM-yyyy");
+                int MovieID = Convert.ToInt32(Movieid_txt.Text);
 
 
                 //this code passes the variable to UpdateMovie in Rented Class
